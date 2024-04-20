@@ -1,0 +1,32 @@
+.label {
+    -fx-font-size: 25.0px;
+    -fx-font-weight: bold;
+}
+
+
+.button {
+    -fx-background-color: #87CEEB;
+    -fx-font-size: 18.0px;
+    -fx-min-width: 250.0px;
+    -fx-min-height: 100.0px;
+    -fx-max-width: 250.0px;
+    -fx-max-height: 100.0px;
+    -fx-graphic-text-gap: 20.0px;
+}
+
+.button:hover {
+    -fx-background-color: #00BFFF;
+    -fx-cursor: hand;
+}
+
+
+
+.button .text {
+    -fx-font-size: 18.0px;
+    -fx-graphic-text-gap: 10.0px;
+}
+
+.button .graphic .image-view {
+    -fx-fit-width: 50.0px;
+    -fx-fit-height: 50.0px;
+}

@@ -1,0 +1,66 @@
+/* employee.css */
+
+.label {
+    -fx-font-family: "Arial Bold";
+    -fx-font-size: 17.0;
+}
+
+.button {
+    -fx-font-family: "Arial Narrow Bold";
+    -fx-font-size: 20.0;
+}
+
+.text-field {
+    -fx-pref-height: 35.0;
+    -fx-pref-width: 200.0;
+}
+
+#table {
+    -fx-pref-height: 200.0;
+    -fx-pref-width: 750.0;
+}
+
+#table .column {
+    -fx-pref-width: 100.0;
+}
+
+#table #idcol {
+    -fx-pref-width: 99.0;
+}
+
+#table #emailcol {
+    -fx-pref-width: 143.0;
+}
+
+#table #datecol {
+    -fx-pref-width: 92.0;
+}
+
+#table #gradecol {
+    -fx-pref-width: 101.0;
+}
+
+#table #depprofcol {
+    -fx-pref-width: 59.0;
+}
+
+#table #genrecol {
+    -fx-pref-width: 102.0;
+}
+
+#table #idcol,
+#table #nomcol,
+#table #emailcol,
+#table #datecol,
+#table #gradecol,
+#table #depprofcol,
+#table #genrecol {
+    -fx-alignment: CENTER;
+}
+
+#AnchorPane {
+    -fx-background-color: white;
+}
+
+
+
