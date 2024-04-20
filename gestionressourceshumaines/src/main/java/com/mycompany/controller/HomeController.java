@@ -1,13 +1,15 @@
 package com.mycompany.controller;
 
-import com.mycompany.util.ErrorUtils;
+import com.mycompany.util.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 public class HomeController {
@@ -75,10 +77,19 @@ public class HomeController {
             stage.setTitle("Home");
             Image hrImage = new Image(getClass().getResourceAsStream("/icons/management.png"));
             stage.getIcons().add(hrImage);
+
+            stage.setResizable(false);
+            Screen screen = Screen.getPrimary();
+            Rectangle2D bounds = screen.getVisualBounds();
+            double centerX = bounds.getMinX() + (bounds.getWidth() - stage.getWidth()) / 2;
+            double centerY = bounds.getMinY() + (bounds.getHeight() - stage.getHeight()) / 2;
+            stage.setX(centerX);
+            stage.setY(centerY);
+
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-            ErrorUtils.displayErrorAndExit("Une erreur s'est produite lors de l'ouverture de la page d'accueil");
+            Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ouverture de la page d'accueil");
         }
     }
 

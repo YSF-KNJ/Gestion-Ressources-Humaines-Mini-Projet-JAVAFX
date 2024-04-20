@@ -1,5 +1,6 @@
 package com.mycompany.model;
 
+import com.mycompany.util.Utils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -87,16 +88,21 @@ public class Poste {
         }
     }
 
-    public static int countPost() throws SQLException {
-        int count = 0;
-        Connection conct = MySQLConnector.getConnection();
-        String query = "SELECT COUNT(*) AS total FROM poste";
-        PreparedStatement stmt = conct.prepareStatement(query);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            count = rs.getInt("total");
+    public static int countPost() {
+        try {
+            int count = 0;
+            Connection conct = MySQLConnector.getConnection();
+            String query = "SELECT COUNT(*) AS total FROM poste";
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+            return count;
+        } catch (SQLException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite");
+            return 0;
         }
-        return count;
     }
 
     public static String[][] getPostesData() throws SQLException {

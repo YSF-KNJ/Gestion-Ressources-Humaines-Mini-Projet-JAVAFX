@@ -1,6 +1,9 @@
 package com.mycompany.model;
 
 
+import com.mycompany.util.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -11,6 +14,27 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Employe {
+
+    private String prenom;
+    private String nom;
+    private String email;
+    private String telephone;
+    private double salaire;
+    private int id_poste;
+    private int id_departement;
+    private Integer id_manager;
+
+    public Employe(String prenom, String nom, String email, String telephone, double salaire, int id_poste, int id_departement, Integer id_manager) {
+        this.prenom = prenom;
+        this.nom = nom;
+        this.email = email;
+        this.telephone = telephone;
+        this.salaire = salaire;
+        this.id_poste = id_poste;
+        this.id_departement = id_departement;
+        this.id_manager = id_manager;
+    }
+
     public static boolean checkID(int id) throws SQLException {
         String Query = "SELECT COUNT(*) AS count FROM employes WHERE id_employe = ?";
         Connection conct = MySQLConnector.getConnection();
@@ -24,6 +48,32 @@ public class Employe {
         conct.close();
         return false;
     }
+
+    public static ObservableList<Employe> getAllEmployes() {
+        ObservableList<Employe> data = FXCollections.observableArrayList();
+        try {
+            Connection conct = MySQLConnector.getConnection();
+            String query = "SELECT * FROM employes";
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                String prenom = rs.getString("prenom");
+                String nom = rs.getString("nom");
+                String email = rs.getString("email");
+                String telephone = rs.getString("telephone");
+                int salaire = rs.getInt("salaire");
+                int id_poste = rs.getInt("id_poste");
+                int id_departement = rs.getInt("id_departement");
+                int id_manager = rs.getInt("id_manager");
+                Employe employe = new Employe(prenom, nom, email, telephone, salaire, id_poste, id_departement, id_manager);
+                data.add(employe);
+            }
+        } catch (SQLException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite");
+        }
+        return data;
+    }
+
 
     public static String[][] getEmployeesData() throws SQLException {
         String[][] data = null;
@@ -201,6 +251,43 @@ public class Employe {
         }
     }
 
+    public static int getSalaryAvg() {
+        try {
+            Connection conct = null;
+            double avgSalary = 0;
+            conct = MySQLConnector.getConnection();
+            String query = "SELECT AVG(salaire) AS avg_salary FROM employes";
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                avgSalary = rs.getDouble("avg_salary");
+            }
+            return (int) avgSalary;
+        } catch (SQLException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite");
+            return 0;
+        }
+    }
+
+    public static int countEmployes() {
+        try {
+            Connection conct = null;
+            int count = 0;
+            conct = MySQLConnector.getConnection();
+            String query = "SELECT COUNT(*) AS total FROM employes";
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+            return count;
+        } catch (SQLException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite");
+            return 0;
+        }
+    }
+
+
     public static void deleteEmploye(int id) throws SQLException {
         Connection conct = null;
         try {
@@ -307,4 +394,37 @@ public class Employe {
         workbook.close();
         conct.close();
     }
+
+    public String getNom() {
+        return this.nom;
+    }
+
+    public String getTelephone() {
+        return telephone;
+    }
+
+    public String getPrenom() {
+        return this.prenom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public int getSalaire() {
+        return (int) this.salaire;
+    }
+
+    public int getIdPoste() {
+        return this.id_poste;
+    }
+
+    public int getIdDepartement() {
+        return this.id_departement;
+    }
+
+    public Integer getIdManager() {
+        return (Integer) this.id_manager;
+    }
+
 }

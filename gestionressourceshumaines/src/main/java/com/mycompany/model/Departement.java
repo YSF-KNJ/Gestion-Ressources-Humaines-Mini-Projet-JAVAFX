@@ -1,5 +1,6 @@
 package com.mycompany.model;
 
+import com.mycompany.util.Utils;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -48,17 +49,22 @@ public class Departement {
 
     }
 
-    public static int countDepartement() throws SQLException {
-        Connection conct = null;
-        int count = 0;
-        conct = MySQLConnector.getConnection();
-        String query = "SELECT COUNT(*) AS total FROM departement";
-        PreparedStatement stmt = conct.prepareStatement(query);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            count = rs.getInt("total");
+    public static int countDepartement() {
+        try {
+            Connection conct = null;
+            int count = 0;
+            conct = MySQLConnector.getConnection();
+            String query = "SELECT COUNT(*) AS total FROM departement";
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+            return count;
+        } catch (SQLException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite");
+            return 0;
         }
-        return count;
     }
 
 
