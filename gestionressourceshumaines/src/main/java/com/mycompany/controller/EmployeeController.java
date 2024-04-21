@@ -112,10 +112,30 @@ public class EmployeeController {
         empadd.setOnAction(event -> handleAddButtonAction());
         empupdate.setOnAction(event -> handleUpdateButtonAction());
         empdelete.setOnAction(event -> handleDeleteButtonAction());
-        empidposte.setRange(1, Poste.countPost(), 1);
-        empiddepartement.setRange(1, Departement.countDepartement(), 1);
-        empidmanager.setRange(1, Employe.countEmployes(), 1);
         empsalaire.setRange(0, Integer.MAX_VALUE, Employe.getSalaryAvg());
+
+        if (Poste.countPost() == 0) {
+            empidposte.setDisable(true);
+            empidposte.setNull();
+        } else {
+            empidposte.setRange(1, Poste.countPost(), 1);
+        }
+
+        if (Departement.countDepartement() == 0) {
+            empiddepartement.setDisable(true);
+            empiddepartement.setNull();
+        } else {
+            empiddepartement.setRange(1, Departement.countDepartement(), 1);
+        }
+
+        if(Employe.countEmployes() == 0){
+            managercheckbox.setSelected(true);
+            empidmanager.setVisible(false);
+            empidmanager.setDisable(true);
+            empidmanager.setNull();
+        } else {
+            empidmanager.setRange(1, Employe.countEmployes(), 1);
+        }
 
         managercheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             empidmanager.setVisible(!newValue);

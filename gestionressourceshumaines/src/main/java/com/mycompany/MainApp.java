@@ -16,14 +16,11 @@ public class MainApp extends Application {
         try {
             Createdb.createdb();
             Createtables.createtables();
-            InsertValues.insert();
             if (Admin.CheckEmpty()) {
                 new SignupController().openSignUpWindow();
             } else {
                 //new SigninController().openSignInWindow();
-                //new HomeController().openHomeWindow();
-                new EmployeeController().openEmployeeWindow();
-                //new DepartmentController().openDepartmentWindow();
+                new HomeController().openHomeWindow();
             }
 
         } catch (Exception e) {

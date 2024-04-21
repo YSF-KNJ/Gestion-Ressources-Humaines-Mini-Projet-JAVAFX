@@ -20,6 +20,12 @@ public class CustomSpinner extends Spinner<Integer> {
         this.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(min, max, initialValue));
     }
 
+    public void setNull() {
+        this.getEditor().setText("");
+    }
+
+
+
     private void setupTextFormatter() {
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String text = change.getText();
