@@ -1,6 +1,8 @@
 package com.mycompany.model;
 
 import com.mycompany.util.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -11,7 +13,46 @@ import java.io.*;
 import java.sql.*;
 import java.util.Scanner;
 
-public class Poste {
+public class Poste{
+    private int id;
+    private String titre_poste;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getTitre_poste() {
+        return titre_poste;
+    }
+
+    public Poste(int id, String titre_poste) {
+        this.id = id;
+        this.titre_poste = titre_poste;
+    }
+
+
+    public static ObservableList<Poste> getAllPostes() {
+        ObservableList<Poste> data;
+        try {
+            String query = "SELECT * FROM poste";
+            Connection conct = MySQLConnector.getConnection();
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
+            data = FXCollections.observableArrayList();
+            while (resultSet.next()) {
+                int idposte = resultSet.getInt("id_poste");
+                String titre_poste = resultSet.getString("titre_poste");
+
+                data.add(new Poste(idposte, titre_poste));
+            }
+            conct.close();
+            return data;
+
+        } catch (SQLException e) {
+            Utils.displayError("Une erreur s'est produite here");
+            return null;
+        }
+    }
     public static boolean checkID(int id) throws SQLException {
         boolean bool = false;
         String Query = "SELECT COUNT(*) AS count FROM poste WHERE id_poste = ?";
@@ -204,8 +245,8 @@ public class Poste {
         int rowNum = 0;
         while (resultSet.next()) {
             Row row = sheet.createRow(rowNum++);
-            Cell cell = row.createCell(0);  // Assuming you want to write to the first column (index 0)
-            cell.setCellValue(resultSet.getString("titre_poste"));
+            row.createCell(0).setCellValue(resultSet.getString("titre_poste"));
+
         }
 
         FileOutputStream fileOut = new FileOutputStream(fileName.trim());

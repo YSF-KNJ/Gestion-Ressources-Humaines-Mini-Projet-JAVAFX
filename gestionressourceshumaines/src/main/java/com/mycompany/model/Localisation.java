@@ -1,6 +1,8 @@
 package com.mycompany.model;
 
 import com.mycompany.util.Utils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -11,7 +13,54 @@ import java.io.*;
 import java.sql.*;
 import java.util.Scanner;
 
-public class Localisation {
+public class Localisation{
+    private int id;
+    private String adresse;
+
+    private String ville;
+
+    public int getId() {
+        return id;
+    }
+
+    public String getAdresse() {
+        return adresse;
+    }
+    public String getVille() {
+        return ville;
+    }
+
+
+    public Localisation(int id, String adresse  , String  ville ) {
+        this.id = id;
+        this.adresse = adresse;
+        this.ville = ville;
+    }
+
+
+    public static ObservableList<Localisation> getAllLocalisations() {
+        ObservableList<Localisation> data;
+        try {
+            String query = "SELECT * FROM localisation";
+            Connection conct = MySQLConnector.getConnection();
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet resultSet = stmt.executeQuery();
+            data = FXCollections.observableArrayList();
+            while (resultSet.next()) {
+                int id = resultSet.getInt("id_localisation");
+                String adresse = resultSet.getString("adresse");
+                String ville = resultSet.getString("ville");
+
+                data.add(new Localisation(id, adresse , ville));
+            }
+            conct.close();
+            return data;
+
+        } catch (SQLException e) {
+            Utils.displayError("Une erreur s'est produite here");
+            return null;
+        }
+    }
     public static boolean checkID(int id) throws SQLException {
         boolean exists = false;
         String Query = "SELECT COUNT(*) AS count FROM localisation WHERE id_localisation = ?";

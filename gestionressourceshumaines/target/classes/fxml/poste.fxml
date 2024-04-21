@@ -11,7 +11,8 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.EmployeeController">
+<?import com.mycompany.util.CustomSpinner?>
+<AnchorPane id="AnchorPane" prefHeight="600.0" prefWidth="800.0" styleClass="mainFxmlClass" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.PosteController">
 
     <children>
         <Pane fx:id="postehome" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" style="-fx-background-color: white;">
@@ -53,6 +54,7 @@
                 </Pane>
                 <TableView fx:id="table" layoutX="25.0" layoutY="373.0" prefHeight="200.0" prefWidth="750.0" style="-fx-background-color: #b3e0f3;">
                     <columns>
+                        <TableColumn fx:id="colpid" prefWidth="260.0" style="-fx-background-color: #87CEEB;" text="Id" />
                         <TableColumn fx:id="coltitredeposte" prefWidth="749.0" style="-fx-background-color: #87CEEB;" text="Titre  de poste " />
                     </columns>
                 </TableView>

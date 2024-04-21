@@ -66,12 +66,14 @@ public class HomeController {
     }
     @FXML
     private void handlePostsButtonClick() {
-        System.out.println("Posts");
+        PosteController posteController = new PosteController();
+        posteController.openPosteWindow();
     }
 
     @FXML
     private void handleLocalisationsButtonClick() {
-        System.out.println("Localisations");
+        LocalisationController localisationController = new LocalisationController();
+        localisationController.openLocalisationWindow();
     }
 
     public void openHomeWindow() {
