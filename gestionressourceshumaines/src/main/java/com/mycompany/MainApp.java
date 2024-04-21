@@ -20,8 +20,9 @@ public class MainApp extends Application {
             if (Admin.CheckEmpty()) {
                 new SignupController().openSignUpWindow();
             } else {
-                new SigninController().openSignInWindow();
+                //new SigninController().openSignInWindow();
                 //new HomeController().openHomeWindow();
+                new EmployeeController().openEmployeeWindow();
             }
 
         } catch (Exception e) {

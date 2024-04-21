@@ -61,6 +61,9 @@ public class EmployeeController {
     private TableView<Employe> table;
 
     @FXML
+    private Employe selectedEmploye;
+
+    @FXML
     private TableColumn<Employe, Integer> colid;
 
     @FXML
@@ -186,13 +189,35 @@ public class EmployeeController {
 
     @FXML
     private void handleUpdateButtonAction() {
-        System.out.println("Update button clicked");
+        if (selectedEmploye == null) {
+            selectedEmploye = table.getSelectionModel().getSelectedItem();
+            if (selectedEmploye != null) {
+                empnom.setText(selectedEmploye.getNom());
+                emprenom.setText(selectedEmploye.getPrenom());
+                empemail.setText(selectedEmploye.getEmail());
+                emptelephone.setText(selectedEmploye.getTelephone());
+                empidposte.setRange(1, Poste.countPost(), selectedEmploye.getIdPoste());
+                empiddepartement.setRange(1, Departement.countDepartement(), selectedEmploye.getIdDepartement());
+                empidmanager.setRange(1, Employe.countEmployes(), selectedEmploye.getIdManager());
+                empsalaire.setRange(0, Integer.MAX_VALUE, selectedEmploye.getSalaire());
+            } else {
+                Utils.displayError("Veuillez sélectionner un employé à modifier");
+            }
+        } else {
+            try {
+                System.out.println("biba l ymak");
+                Utils.displayInfo("Employé mis à jour avec succès");
+                updateFields();
+                selectedEmploye = null;
+            } catch (Exception e) {
+                Utils.displayError("Une erreur s'est produite lors de la mise à jour de l'employé");
+            }
+        }
     }
 
     @FXML
     private void handleDeleteButtonAction() {
         Employe selectedEmploye = table.getSelectionModel().getSelectedItem();
-
         if (selectedEmploye != null) {
             try {
                 Employe.deleteEmploye(selectedEmploye.getId());
