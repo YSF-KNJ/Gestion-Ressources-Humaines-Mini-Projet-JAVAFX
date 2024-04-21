@@ -6,104 +6,99 @@ import com.mycompany.model.Poste;
 import com.mycompany.util.CustomSpinner;
 import com.mycompany.util.EmailValidator;
 import com.mycompany.util.Utils;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.net.URL;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ResourceBundle;
 
-import static com.mycompany.model.Employe.getAllEmployes;
-
-public class EmployeeController implements Initializable {
+public class EmployeeController {
 
     @FXML
     private TextField empnom;
+
     @FXML
     private TextField emprenom;
-    @FXML
-    private TextField empemail;
-    @FXML
-    private TextField emptelephone;
-    @FXML
-    private CustomSpinner empsalaire;
 
     @FXML
     private CustomSpinner empidposte;
 
     @FXML
+    private TextField empemail;
+
+    @FXML
+    private CustomSpinner empsalaire;
+
+    @FXML
+    private TextField emptelephone;
+
+    @FXML
     private CustomSpinner empiddepartement;
+
     @FXML
     private CustomSpinner empidmanager;
 
     @FXML
-    private TableView<Employe> table;
-
-    @FXML
-    private TableColumn<Employe, String> colnom;
-    @FXML
-    private TableColumn<Employe, String> colprenom;
-    @FXML
-    private TableColumn<Employe, String> colemail;
-    @FXML
-    private TableColumn<Employe, String> coltelephone;
-    @FXML
-    private TableColumn<Employe, Integer> colsalaire;
-    @FXML
-    private TableColumn<Employe, Integer> colidposte;
-    @FXML
-    private TableColumn<Employe, Integer> coliddepartement;
-
-    @FXML
-    private TableColumn<Employe, Integer> colidmanger;
-
-    @FXML
     private Button empadd;
+
     @FXML
     private Button empupdate;
+
     @FXML
     private Button empdelete;
 
-    @Override
-    public void initialize(URL url, ResourceBundle resourceBundle) {
-        colnom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNom()));
-        colprenom.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getPrenom()));
-        colemail.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
-        coltelephone.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getTelephone()));
-        colsalaire.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getSalaire()).asObject());
-        colidposte.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getIdPoste()).asObject());
-        coliddepartement.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getIdDepartement()).asObject());
-        colidmanger.setCellValueFactory(cellData -> new SimpleIntegerProperty(cellData.getValue().getIdManager()).asObject());
+    @FXML
+    private TableView table;
 
+    @FXML
+    private TableColumn colnom;
 
-        ObservableList<Employe> data = getAllEmployes();
-        table.setItems(data);
+    @FXML
+    private TableColumn colprenom;
 
+    @FXML
+    private TableColumn colemail;
+
+    @FXML
+    private TableColumn coltelephone;
+
+    @FXML
+    private TableColumn colsalaire;
+
+    @FXML
+    private TableColumn colidposte;
+
+    @FXML
+    private TableColumn coliddepartement;
+
+    @FXML
+    private TableColumn colidmanger;
+
+    @FXML
+    public void initialize() {
+
+        empadd.setOnAction(event -> handleAddButtonAction());
+        empupdate.setOnAction(event -> handleUpdateButtonAction());
+        empdelete.setOnAction(event -> handleDeleteButtonAction());
 
         empidposte.setRange(1, Poste.countPost(), 1);
         empiddepartement.setRange(1, Departement.countDepartement(), 1);
         empidmanager.setRange(1, Employe.countEmployes(), 1);
         empsalaire.setRange(0, Integer.MAX_VALUE, Employe.getSalaryAvg());
-        empadd.setOnAction(event -> handleAddButton());
-        empupdate.setOnAction(event -> handleUpdateButton());
-        empdelete.setOnAction(event -> handleDeleteButton());
 
     }
 
-    private void handleAddButton() {
+    @FXML
+    private void handleAddButtonAction() {
         if (empnom.getText().isEmpty() || empsalaire.getValue() == null || empidposte.getValue() == null || empiddepartement.getValue() == null || empidmanager.getValue() == null || empemail.getText().isEmpty() || emptelephone.getText().isEmpty()) {
             Utils.displayError("Veuillez remplir tous les champs");
         } else {
@@ -136,34 +131,30 @@ public class EmployeeController implements Initializable {
         }
     }
 
-    private void handleUpdateButton() {
+    @FXML
+    private void handleUpdateButtonAction() {
+        System.out.println("Update button clicked");
     }
 
-    private void handleDeleteButton() {
+    @FXML
+    private void handleDeleteButtonAction() {
+        System.out.println("Delete button clicked");
     }
 
+    @FXML
     public void openEmployeeWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/employee.fxml"));
-            Scene scene = new Scene(loader.load());
+            Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Employee");
+            stage.setScene(new Scene(root));
+            stage.setTitle("Gestion des employés");
             Image hrImage = new Image(getClass().getResourceAsStream("/icons/management.png"));
             stage.getIcons().add(hrImage);
-
             stage.setResizable(false);
-            Screen screen = Screen.getPrimary();
-            Rectangle2D bounds = screen.getVisualBounds();
-            double centerX = bounds.getMinX() + (bounds.getWidth() - stage.getWidth()) / 2;
-            double centerY = bounds.getMinY() + (bounds.getHeight() - stage.getHeight()) / 2;
-            stage.setX(centerX);
-            stage.setY(centerY);
-
             stage.show();
-        } catch (Exception e) {
-            e.printStackTrace();
-            Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ouverture de la page de employee");
+        } catch (IOException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ouverture de la page d'inscription");
         }
     }
 
@@ -172,14 +163,10 @@ public class EmployeeController implements Initializable {
         this.emprenom.clear();
         this.empemail.clear();
         this.emptelephone.clear();
-
         this.empidposte.setRange(1, Poste.countPost(), 1);
         this.empiddepartement.setRange(1, Departement.countDepartement(), 1);
         this.empidmanager.setRange(1, Employe.countEmployes(), 1);
         this.empsalaire.setRange(0, Integer.MAX_VALUE, Employe.getSalaryAvg());
-
-
     }
-
 }
 

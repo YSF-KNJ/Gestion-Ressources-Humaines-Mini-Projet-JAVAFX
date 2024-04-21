@@ -1,0 +1,17 @@
+VBox {
+    -fx-background-color: #87CEEB;
+}
+
+#registerButton {
+    -fx-background-color: #87CEEB;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+#registerButton:hover {
+    -fx-background-color: #00BFFF;
+    -fx-cursor: hand;
+}
+
+#txtnom, #txtprénom, #txtemail, #txtmotdepasse {
+}
+

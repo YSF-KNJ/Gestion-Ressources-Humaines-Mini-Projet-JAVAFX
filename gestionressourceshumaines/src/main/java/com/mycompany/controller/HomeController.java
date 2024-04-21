@@ -3,14 +3,16 @@ package com.mycompany.controller;
 import com.mycompany.util.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class HomeController {
 
@@ -41,6 +43,7 @@ public class HomeController {
     @FXML
     private ImageView localisationsImageView;
 
+    @FXML
     public void initialize() {
 
         buttonEmployees.setOnAction(event -> handleEmployeeButtonClick());
@@ -49,21 +52,25 @@ public class HomeController {
         buttonLocalisations.setOnAction(event -> handleLocalisationsButtonClick());
     }
 
+    @FXML
     private void handleEmployeeButtonClick() {
-        new EmployeeController().openEmployeeWindow();
-        Stage stage = (Stage) buttonEmployees.getScene().getWindow();
-        stage.close();
+        EmployeeController employeeController = new EmployeeController();
+        employeeController.openEmployeeWindow();
 
     }
 
+    @FXML
     private void handleDepartmentButtonClick() {
         System.out.println("Departments");
+        // open Home window
+        //new HomeController().openHomeWindow();
     }
-
+    @FXML
     private void handlePostsButtonClick() {
         System.out.println("Posts");
     }
 
+    @FXML
     private void handleLocalisationsButtonClick() {
         System.out.println("Localisations");
     }
@@ -71,25 +78,18 @@ public class HomeController {
     public void openHomeWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/home.fxml"));
-            Scene scene = new Scene(loader.load());
+            Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Home");
+            stage.setScene(new Scene(root));
+            stage.setTitle("Gestion des ressources humaines");
             Image hrImage = new Image(getClass().getResourceAsStream("/icons/management.png"));
             stage.getIcons().add(hrImage);
-
             stage.setResizable(false);
-            Screen screen = Screen.getPrimary();
-            Rectangle2D bounds = screen.getVisualBounds();
-            double centerX = bounds.getMinX() + (bounds.getWidth() - stage.getWidth()) / 2;
-            double centerY = bounds.getMinY() + (bounds.getHeight() - stage.getHeight()) / 2;
-            stage.setX(centerX);
-            stage.setY(centerY);
-
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
             Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ouverture de la page d'accueil");
+
         }
     }
 

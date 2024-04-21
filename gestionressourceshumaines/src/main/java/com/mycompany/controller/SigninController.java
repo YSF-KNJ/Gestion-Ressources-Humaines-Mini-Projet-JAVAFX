@@ -6,6 +6,7 @@ import com.mycompany.util.Utils;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -79,21 +80,13 @@ public class SigninController {
     public void openSignInWindow() {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/signin.fxml"));
-            Scene scene = new Scene(loader.load());
+            Parent root = loader.load();
             Stage stage = new Stage();
-            stage.setScene(scene);
-            stage.setTitle("Sign In");
+            stage.setScene(new Scene(root));
+            stage.setTitle("Connexion");
             Image hrImage = new Image(getClass().getResourceAsStream("/icons/management.png"));
             stage.getIcons().add(hrImage);
-
             stage.setResizable(false);
-            Screen screen = Screen.getPrimary();
-            Rectangle2D bounds = screen.getVisualBounds();
-            double centerX = bounds.getMinX() + (bounds.getWidth() - stage.getWidth()) / 2;
-            double centerY = bounds.getMinY() + (bounds.getHeight() - stage.getHeight()) / 2;
-            stage.setX(centerX);
-            stage.setY(centerY);
-
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();

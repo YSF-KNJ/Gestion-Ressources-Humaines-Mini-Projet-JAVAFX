@@ -1,0 +1,17 @@
+VBox {
+    -fx-background-color: #87CEEB;
+}
+
+#signinButton {
+    -fx-background-color: #87CEEB;
+    -fx-text-fill: white;
+    -fx-font-size: 18px;
+}
+#signinButton:hover {
+    -fx-background-color: #00BFFF;
+    -fx-cursor: hand;
+}
+
+#txtnom1, #txtmotdepasse1 {
+}
+
