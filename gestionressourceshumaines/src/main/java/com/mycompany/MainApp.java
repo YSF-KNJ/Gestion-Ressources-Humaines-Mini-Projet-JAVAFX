@@ -1,6 +1,7 @@
 package com.mycompany;
 
-import com.mycompany.controller.*;
+import com.mycompany.controller.SigninController;
+import com.mycompany.controller.SignupController;
 import com.mycompany.model.Admin;
 import com.mycompany.model.Createdb;
 import com.mycompany.model.Createtables;

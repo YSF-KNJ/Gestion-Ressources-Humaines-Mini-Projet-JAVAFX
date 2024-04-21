@@ -1,9 +1,6 @@
 package com.mycompany.controller;
 
 import com.mycompany.model.Poste;
-import com.mycompany.model.Employe;
-import com.mycompany.model.Localisation;
-import com.mycompany.util.CustomSpinner;
 import com.mycompany.util.Utils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -70,14 +67,14 @@ public class PosteController {
 
     @FXML
     public void handleAddButtonAction() {
-        if (titredeposte.getText().isEmpty() ) {
+        if (titredeposte.getText().isEmpty()) {
             Utils.displayError("Veuillez remplir tous les champs");
         } else {
             try {
 
-                    Poste.addPost(titredeposte.getText());
-                    Utils.displayInfo("Poste ajouté avec succès");
-                    updateFields();
+                Poste.addPost(titredeposte.getText());
+                Utils.displayInfo("Poste ajouté avec succès");
+                updateFields();
 
             } catch (SQLException e) {
                 Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ajout de poste");
@@ -109,7 +106,6 @@ public class PosteController {
             }
         }
     }
-
 
 
     @FXML

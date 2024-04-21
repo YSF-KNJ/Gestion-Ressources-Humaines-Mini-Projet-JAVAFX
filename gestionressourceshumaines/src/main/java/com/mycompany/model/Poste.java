@@ -13,8 +13,8 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Poste {
-    private int id;
-    private String titre_poste;
+    private final int id;
+    private final String titre_poste;
 
     public int getId() {
         return id;
@@ -91,15 +91,24 @@ public class Poste {
 
     public static void updatePost(int id, String title) throws SQLException {
         Connection conct = null;
-        String Query = "UPDATE poste SET titre_poste = ? WHERE id_poste = ?";
-        conct = MySQLConnector.getConnection();
-        conct.setAutoCommit(false);
-        PreparedStatement stmt = conct.prepareStatement(Query);
-        stmt.setString(1, title.trim().toUpperCase());
-        stmt.setInt(2, id);
-        stmt.executeUpdate();
-        conct.commit();
-        conct.close();
+        if (checkID(id)) {
+            try {
+                String Query = "UPDATE poste SET titre_poste = ? WHERE id_poste = ?";
+                conct = MySQLConnector.getConnection();
+                conct.setAutoCommit(false);
+                PreparedStatement stmt = conct.prepareStatement(Query);
+                stmt.setString(1, title.trim().toUpperCase());
+                stmt.setInt(2, id);
+                stmt.executeUpdate();
+                conct.commit();
+                conct.close();
+            } catch (SQLException e) {
+                if (conct != null) {
+                    conct.rollback();
+                    throw e;
+                }
+            }
+        }
     }
 
     public static void addPost(String title) throws SQLException {

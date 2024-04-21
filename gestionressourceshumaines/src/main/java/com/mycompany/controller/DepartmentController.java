@@ -3,7 +3,6 @@ package com.mycompany.controller;
 import com.mycompany.model.Departement;
 import com.mycompany.model.Employe;
 import com.mycompany.model.Localisation;
-import com.mycompany.model.Poste;
 import com.mycompany.util.CustomSpinner;
 import com.mycompany.util.Utils;
 import javafx.collections.ObservableList;
@@ -71,8 +70,6 @@ public class DepartmentController {
         depadd.setOnAction(event -> handleAddButtonAction());
         depupdate.setOnAction(event -> handleUpdateButtonAction());
         depdelete.setOnAction(event -> handleDeleteButtonAction());
-
-
 
 
         if (Localisation.countLocalisation() == 0) {

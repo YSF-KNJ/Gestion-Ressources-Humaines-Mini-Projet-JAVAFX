@@ -13,9 +13,9 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Departement {
-    private int id;
-    private String nom_Departement;
-    private int id_localisation;
+    private final int id;
+    private final String nom_Departement;
+    private final int id_localisation;
 
 
     public int getId() {

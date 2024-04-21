@@ -13,11 +13,11 @@ import java.io.*;
 import java.sql.*;
 import java.util.Scanner;
 
-public class Localisation{
-    private int id;
-    private String adresse;
+public class Localisation {
+    private final int id;
+    private final String adresse;
 
-    private String ville;
+    private final String ville;
 
     public int getId() {
         return id;
@@ -26,12 +26,13 @@ public class Localisation{
     public String getAdresse() {
         return adresse;
     }
+
     public String getVille() {
         return ville;
     }
 
 
-    public Localisation(int id, String adresse  , String  ville ) {
+    public Localisation(int id, String adresse, String ville) {
         this.id = id;
         this.adresse = adresse;
         this.ville = ville;
@@ -51,7 +52,7 @@ public class Localisation{
                 String adresse = resultSet.getString("adresse");
                 String ville = resultSet.getString("ville");
 
-                data.add(new Localisation(id, adresse , ville));
+                data.add(new Localisation(id, adresse, ville));
             }
             conct.close();
             return data;
@@ -61,6 +62,7 @@ public class Localisation{
             return null;
         }
     }
+
     public static boolean checkID(int id) throws SQLException {
         boolean exists = false;
         String Query = "SELECT COUNT(*) AS count FROM localisation WHERE id_localisation = ?";
@@ -87,7 +89,6 @@ public class Localisation{
             stmt.executeUpdate();
             conct.commit();
             conct.close();
-            System.out.println("Localisation avec l'ID " + id + " est supprimé.");
         } catch (SQLException e) {
             if (conct != null) {
                 conct.rollback();
@@ -148,20 +149,23 @@ public class Localisation{
 
     public static void updateLocalisation(int id, String adresse, String ville) throws SQLException {
         Connection conct = null;
-        try {
-            String Query = "UPDATE localisation SET adresse = ?,ville = ? WHERE id_localisation = ?";
-            conct = MySQLConnector.getConnection();
-            conct.setAutoCommit(false);
-            PreparedStatement stmt = conct.prepareStatement(Query);
-            stmt.setString(1, adresse.trim().toUpperCase());
-            stmt.setString(2, ville.trim().toUpperCase());
-            stmt.setInt(3, id);
-            stmt.executeUpdate();
-            conct.close();
-        } catch (SQLException e) {
-            if (conct != null) {
-                conct.rollback();
-                throw e;
+        if (checkID(id)) {
+            try {
+                String Query = "UPDATE localisation SET adresse = ?, ville = ? WHERE id_localisation = ?";
+                conct = MySQLConnector.getConnection();
+                conct.setAutoCommit(false);
+                PreparedStatement stmt = conct.prepareStatement(Query);
+                stmt.setString(1, adresse);
+                stmt.setString(2, ville);
+                stmt.setInt(3, id);
+                stmt.executeUpdate();
+                conct.commit();
+                conct.close();
+            } catch (SQLException e) {
+                if (conct != null) {
+                    conct.rollback();
+                    throw e;
+                }
             }
         }
     }

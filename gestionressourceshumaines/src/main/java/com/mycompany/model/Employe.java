@@ -14,15 +14,15 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Employe {
-    private int id;
-    private String prenom;
-    private String nom;
-    private String email;
-    private String telephone;
-    private double salaire;
-    private int id_poste;
-    private int id_departement;
-    private Integer id_manager;
+    private final int id;
+    private final String prenom;
+    private final String nom;
+    private final String email;
+    private final String telephone;
+    private final double salaire;
+    private final int id_poste;
+    private final int id_departement;
+    private final Integer id_manager;
 
     public Employe(int id, String prenom, String nom, String email, String telephone, double salaire, int id_poste, int id_departement, Integer id_manager) {
         this.id = id;
@@ -70,7 +70,7 @@ public class Employe {
                 int idDepartement = resultSet.getInt("id_departement");
                 int idManager = resultSet.getInt("id_manager");
 
-                data.add(new Employe(id,nom, prenom, email, telephone, salaire, idPoste, idDepartement, idManager));
+                data.add(new Employe(id, nom, prenom, email, telephone, salaire, idPoste, idDepartement, idManager));
             }
             conct.close();
             return data;
@@ -435,7 +435,7 @@ public class Employe {
     }
 
     public Integer getIdManager() {
-        return (Integer) this.id_manager;
+        return this.id_manager;
     }
 
 }

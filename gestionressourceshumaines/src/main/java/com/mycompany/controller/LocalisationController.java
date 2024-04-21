@@ -1,7 +1,6 @@
 package com.mycompany.controller;
 
 import com.mycompany.model.Localisation;
-
 import com.mycompany.util.Utils;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -29,8 +28,6 @@ public class LocalisationController {
     private TextField ville;
 
 
-
-
     @FXML
     private Button locadd;
 
@@ -47,10 +44,14 @@ public class LocalisationController {
     private TableColumn<Localisation, Integer> collid;
 
     @FXML
+    private Localisation selectedLocalisation;
+
+    @FXML
     private TableColumn<Localisation, String> coladresse;
 
     @FXML
     private TableColumn<Localisation, String> colville;
+
     @FXML
     public void initialize() {
 
@@ -74,14 +75,14 @@ public class LocalisationController {
 
     @FXML
     public void handleAddButtonAction() {
-        if (adresse.getText().isEmpty() || ville.getText().isEmpty() ) {
+        if (adresse.getText().isEmpty() || ville.getText().isEmpty()) {
             Utils.displayError("Veuillez remplir tous les champs");
         } else {
             try {
 
-                    Localisation.addLocalisation(adresse.getText() , ville.getText());
-                    Utils.displayInfo("Localisation ajouté avec succès");
-                    updateFields();
+                Localisation.addLocalisation(adresse.getText(), ville.getText());
+                Utils.displayInfo("Localisation ajouté avec succès");
+                updateFields();
 
             } catch (SQLException e) {
                 Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ajout de poste");
@@ -91,6 +92,28 @@ public class LocalisationController {
 
     @FXML
     public void handleUpdateButtonAction() {
+        if (selectedLocalisation == null) {
+            selectedLocalisation = table.getSelectionModel().getSelectedItem();
+            if (selectedLocalisation != null) {
+                adresse.setText(selectedLocalisation.getAdresse());
+                ville.setText(selectedLocalisation.getVille());
+            } else {
+                Utils.displayError("Veuillez sélectionner une localisation à modifier");
+            }
+        } else {
+            if (adresse.getText().isEmpty() || ville.getText().isEmpty()) {
+                Utils.displayError("Veuillez remplir tous les champs");
+            } else {
+                try {
+                    Localisation.updateLocalisation(selectedLocalisation.getId(), adresse.getText(), ville.getText());
+                    Utils.displayInfo("Localisation modifiée avec succès");
+                    updateFields();
+                    selectedLocalisation = null;
+                } catch (Exception e) {
+                    Utils.displayErrorAndExit("Une erreur s'est produite lors de la modification de la localisation");
+                }
+            }
+        }
     }
 
     @FXML

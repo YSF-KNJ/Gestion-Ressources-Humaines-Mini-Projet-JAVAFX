@@ -11,9 +11,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 public class HomeController {
 
     @FXML
@@ -64,6 +61,7 @@ public class HomeController {
         DepartmentController departmentController = new DepartmentController();
         departmentController.openDepartmentWindow();
     }
+
     @FXML
     private void handlePostsButtonClick() {
         PosteController posteController = new PosteController();

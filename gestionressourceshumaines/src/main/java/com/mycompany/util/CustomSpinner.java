@@ -25,7 +25,6 @@ public class CustomSpinner extends Spinner<Integer> {
     }
 
 
-
     private void setupTextFormatter() {
         UnaryOperator<TextFormatter.Change> filter = change -> {
             String text = change.getText();
