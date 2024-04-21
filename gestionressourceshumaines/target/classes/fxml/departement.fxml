@@ -47,7 +47,7 @@
                         </Button>
                         <ImageView fitHeight="200.0" fitWidth="300.0" layoutX="53.0" layoutY="49.0" pickOnBounds="true" preserveRatio="true">
                             <image>
-                                <Image url="@../icons/dep.jpg" />
+                                <Image url="@../icons/dep.png" />
                             </image>
                         </ImageView>
                       <Label fx:id="messagelabel" layoutX="206.0" layoutY="14.0" text="" textFill="RED" />
