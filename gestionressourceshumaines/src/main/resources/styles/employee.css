@@ -3,6 +3,11 @@
 .label {
     -fx-font-family: "Arial Bold";
     -fx-font-size: 17.0;
+    -fx-alignment: center;
+}
+
+Label {
+    -fx-alignment: center;
 }
 
 .button {

@@ -99,6 +99,7 @@
                   <TableColumn fx:id="colidmanger" prefWidth="73.0" style="-fx-background-color: #87CEEB;" text="IDManager" />
                </columns>
             </TableView>
+            <Label fx:id="messagelabel" layoutX="191.0" layoutY="31.0" text="" textFill="RED" />
          </children>
       </Pane>
    </children>

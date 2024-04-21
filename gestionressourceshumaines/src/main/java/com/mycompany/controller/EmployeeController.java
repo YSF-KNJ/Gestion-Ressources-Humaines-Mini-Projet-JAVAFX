@@ -34,6 +34,9 @@ public class EmployeeController {
     private TextField empemail;
 
     @FXML
+    private Label messagelabel;
+
+    @FXML
     private CustomSpinner empsalaire;
 
     @FXML
@@ -128,7 +131,7 @@ public class EmployeeController {
             empiddepartement.setRange(1, Departement.countDepartement(), 1);
         }
 
-        if(Employe.countEmployes() == 0){
+        if (Employe.countEmployes() == 0) {
             managercheckbox.setSelected(true);
             empidmanager.setVisible(false);
             empidmanager.setDisable(true);
@@ -140,6 +143,10 @@ public class EmployeeController {
         managercheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
             empidmanager.setVisible(!newValue);
         });
+
+        if (Poste.countPost() == 0 && Departement.countDepartement() == 0) {
+            messagelabel.setText("Veuillez ajouter un poste et un département d'abord");
+        }
 
     }
 

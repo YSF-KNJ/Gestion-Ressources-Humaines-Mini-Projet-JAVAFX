@@ -3,6 +3,7 @@ package com.mycompany.controller;
 import com.mycompany.model.Departement;
 import com.mycompany.model.Employe;
 import com.mycompany.model.Localisation;
+import com.mycompany.model.Poste;
 import com.mycompany.util.CustomSpinner;
 import com.mycompany.util.Utils;
 import javafx.collections.ObservableList;
@@ -10,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -25,6 +23,9 @@ public class DepartmentController {
 
     @FXML
     private TextField titrededepartement;
+
+    @FXML
+    private Label messagelabel;
 
     @FXML
     private CustomSpinner depidlocalisation;
@@ -70,7 +71,17 @@ public class DepartmentController {
         depadd.setOnAction(event -> handleAddButtonAction());
         depupdate.setOnAction(event -> handleUpdateButtonAction());
         depdelete.setOnAction(event -> handleDeleteButtonAction());
-        this.depidlocalisation.setRange(1, Localisation.countLocalisation(), 1);
+
+
+
+
+        if (Localisation.countLocalisation() == 0) {
+            depidlocalisation.setDisable(true);
+            depidlocalisation.setNull();
+            messagelabel.setText("Veuillez ajouter une localisation avant d'ajouter un département");
+        } else {
+            this.depidlocalisation.setRange(1, Localisation.countLocalisation(), 1);
+        }
     }
 
     @FXML

@@ -16,6 +16,7 @@ public class MainApp extends Application {
         try {
             Createdb.createdb();
             Createtables.createtables();
+            InsertValues.insert();
             if (Admin.CheckEmpty()) {
                 new SignupController().openSignUpWindow();
             } else {
