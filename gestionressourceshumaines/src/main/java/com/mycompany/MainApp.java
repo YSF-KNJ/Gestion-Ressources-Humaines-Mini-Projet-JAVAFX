@@ -1,9 +1,6 @@
 package com.mycompany;
 
-import com.mycompany.controller.EmployeeController;
-import com.mycompany.controller.HomeController;
-import com.mycompany.controller.SigninController;
-import com.mycompany.controller.SignupController;
+import com.mycompany.controller.*;
 import com.mycompany.model.Admin;
 import com.mycompany.model.Createdb;
 import com.mycompany.model.Createtables;
@@ -23,7 +20,8 @@ public class MainApp extends Application {
             if (Admin.CheckEmpty()) {
                 new SignupController().openSignUpWindow();
             } else {
-                new SigninController().openSignInWindow();
+                //new SigninController().openSignInWindow();
+                new HomeController().openHomeWindow();
             }
 
         } catch (Exception e) {

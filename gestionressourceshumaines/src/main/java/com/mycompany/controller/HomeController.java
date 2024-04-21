@@ -61,9 +61,8 @@ public class HomeController {
 
     @FXML
     private void handleDepartmentButtonClick() {
-        System.out.println("Departments");
-        // open Home window
-        //new HomeController().openHomeWindow();
+        DepartmentController departmentController = new DepartmentController();
+        departmentController.openDepartmentWindow();
     }
     @FXML
     private void handlePostsButtonClick() {
