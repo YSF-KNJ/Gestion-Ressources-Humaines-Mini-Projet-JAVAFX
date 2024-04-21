@@ -23,12 +23,7 @@ public class MainApp extends Application {
             if (Admin.CheckEmpty()) {
                 new SignupController().openSignUpWindow();
             } else {
-                // emplye
-                //EmployeeController employeeController = new EmployeeController();
-                //employeeController.openEmployeeWindow();
-
-                HomeController homeController = new HomeController();
-                homeController.openHomeWindow();
+                new SigninController().openSignInWindow();
             }
 
         } catch (Exception e) {

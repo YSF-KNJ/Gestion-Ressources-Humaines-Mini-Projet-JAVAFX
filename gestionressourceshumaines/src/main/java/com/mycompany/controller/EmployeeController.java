@@ -2,11 +2,13 @@ package com.mycompany.controller;
 
 import com.mycompany.model.Departement;
 import com.mycompany.model.Employe;
+import com.mycompany.model.MySQLConnector;
 import com.mycompany.model.Poste;
 import com.mycompany.util.CustomSpinner;
 import com.mycompany.util.EmailValidator;
 import com.mycompany.util.Utils;
-import javafx.event.ActionEvent;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,10 +17,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EmployeeController {
@@ -57,34 +63,50 @@ public class EmployeeController {
     private Button empdelete;
 
     @FXML
-    private TableView table;
+    private TableView<Employe> table;
 
     @FXML
-    private TableColumn colnom;
+    private TableColumn<Employe, String> colnom;
 
     @FXML
-    private TableColumn colprenom;
+    private TableColumn<Employe, String> colprenom;
 
     @FXML
-    private TableColumn colemail;
+    private TableColumn<Employe, String> colemail;
 
     @FXML
-    private TableColumn coltelephone;
+    private TableColumn<Employe, String> coltelephone;
 
     @FXML
-    private TableColumn colsalaire;
+    private TableColumn<Employe, Integer> colsalaire;
 
     @FXML
-    private TableColumn colidposte;
+    private TableColumn<Employe, Integer> colidposte;
 
     @FXML
-    private TableColumn coliddepartement;
+    private TableColumn<Employe, Integer> coliddepartement;
 
     @FXML
-    private TableColumn colidmanger;
+    private TableColumn<Employe, Integer> colidmanger;
 
     @FXML
     public void initialize() {
+        colnom.setCellValueFactory(new PropertyValueFactory<>("nom"));
+        colprenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
+        colemail.setCellValueFactory(new PropertyValueFactory<>("email"));
+        coltelephone.setCellValueFactory(new PropertyValueFactory<>("telephone"));
+        colsalaire.setCellValueFactory(new PropertyValueFactory<>("salaire"));
+        colidposte.setCellValueFactory(new PropertyValueFactory<>("idPoste"));
+        coliddepartement.setCellValueFactory(new PropertyValueFactory<>("idDepartement"));
+        colidmanger.setCellValueFactory(new PropertyValueFactory<>("idManager"));
+
+        try {
+            ObservableList<Employe> data = Employe.getAllEmployes();
+            table.setItems(data);
+        } catch (Exception e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite lors de la récupération des données");
+        }
+
 
         empadd.setOnAction(event -> handleAddButtonAction());
         empupdate.setOnAction(event -> handleUpdateButtonAction());
@@ -167,6 +189,14 @@ public class EmployeeController {
         this.empiddepartement.setRange(1, Departement.countDepartement(), 1);
         this.empidmanager.setRange(1, Employe.countEmployes(), 1);
         this.empsalaire.setRange(0, Integer.MAX_VALUE, Employe.getSalaryAvg());
+
+        try {
+            ObservableList<Employe> data = Employe.getAllEmployes();
+            table.setItems(data);
+        } catch (Exception e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite lors de la récupération des données");
+        }
+
     }
 }
 

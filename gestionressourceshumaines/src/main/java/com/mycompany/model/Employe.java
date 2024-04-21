@@ -50,26 +50,31 @@ public class Employe {
     }
 
     public static ObservableList<Employe> getAllEmployes() {
-        ObservableList<Employe> data = FXCollections.observableArrayList();
+        ObservableList<Employe> data;
         try {
+            String Query = "SELECT * FROM employes";
             Connection conct = MySQLConnector.getConnection();
-            String query = "SELECT * FROM employes";
-            PreparedStatement stmt = conct.prepareStatement(query);
-            ResultSet rs = stmt.executeQuery();
-            while (rs.next()) {
-                String prenom = rs.getString("prenom");
-                String nom = rs.getString("nom");
-                String email = rs.getString("email");
-                String telephone = rs.getString("telephone");
-                int salaire = rs.getInt("salaire");
-                int id_poste = rs.getInt("id_poste");
-                int id_departement = rs.getInt("id_departement");
-                int id_manager = rs.getInt("id_manager");
-                Employe employe = new Employe(prenom, nom, email, telephone, salaire, id_poste, id_departement, id_manager);
-                data.add(employe);
+            PreparedStatement stmt = conct.prepareStatement(Query);
+            ResultSet resultSet = stmt.executeQuery();
+            data = FXCollections.observableArrayList();
+
+            while (resultSet.next()) {
+                String nom = resultSet.getString("nom");
+                String prenom = resultSet.getString("prenom");
+                String email = resultSet.getString("email");
+                String telephone = resultSet.getString("telephone");
+                int salaire = resultSet.getInt("salaire");
+                int idPoste = resultSet.getInt("id_poste");
+                int idDepartement = resultSet.getInt("id_departement");
+                int idManager = resultSet.getInt("id_manager");
+
+                data.add(new Employe(nom, prenom, email, telephone, salaire, idPoste, idDepartement, idManager));
             }
+            conct.close();
+            return data;
         } catch (SQLException e) {
-            Utils.displayErrorAndExit("Une erreur s'est produite");
+            data = null;
+            Utils.displayErrorAndExit("Une erreur s'est produite lors de la récupération des données");
         }
         return data;
     }
