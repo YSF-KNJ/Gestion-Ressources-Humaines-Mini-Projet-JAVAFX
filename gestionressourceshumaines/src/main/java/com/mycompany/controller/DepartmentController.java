@@ -95,6 +95,20 @@ public class DepartmentController {
 
     @FXML
     public void handleDeleteButtonAction() {
+        Departement selectedDepartement = table.getSelectionModel().getSelectedItem();
+        if (selectedDepartement != null) {
+            try {
+                Employe.deleteEmploye(selectedDepartement.getId());
+                table.getItems().remove(selectedDepartement);
+                Utils.displayInfo("Departement supprimé avec succès");
+                updateFields();
+
+            } catch (SQLException e) {
+                Utils.displayError("Une erreur s'est produite lors de la suppression de département");
+            }
+        } else {
+            Utils.displayError("Veuillez sélectionner un département à supprimer");
+        }
     }
 
 
