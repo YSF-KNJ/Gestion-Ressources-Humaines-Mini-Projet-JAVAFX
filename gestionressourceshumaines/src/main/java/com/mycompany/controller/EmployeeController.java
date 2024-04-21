@@ -227,6 +227,7 @@ public class EmployeeController {
 
                                     Utils.displayInfo("Employé mis à jour");
                                     updateFields();
+                                    selectedEmploye = null;
                                 } else {
                                     Utils.displayError("vérifier les identifiants de poste, de manager et de département");
                                 }
@@ -257,6 +258,7 @@ public class EmployeeController {
                                             empiddepartement.getIntValue());
                                     Utils.displayInfo("manager mis à jour avec succès");
                                     updateFields();
+                                    selectedEmploye = null;
                                 } else {
                                     Utils.displayError("vérifier les identifiants de poste et de département");
                                 }
@@ -268,7 +270,6 @@ public class EmployeeController {
 
                     }
                 }
-                selectedEmploye = null;
             } catch (Exception e) {
                 Utils.displayError("Une erreur s'est produite lors de la mise à jour de l'employé");
             }
@@ -300,7 +301,7 @@ public class EmployeeController {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Inscription Fenêtre");
+            stage.setTitle("Gestion des employés");
             Image hrImage = new Image(getClass().getResourceAsStream("/icons/management.png"));
             stage.getIcons().add(hrImage);
             stage.setResizable(false);

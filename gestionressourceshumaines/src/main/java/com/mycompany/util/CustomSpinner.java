@@ -30,6 +30,14 @@ public class CustomSpinner extends Spinner<Integer> {
         };
         TextFormatter<Integer> textFormatter = new TextFormatter<>(new IntegerStringConverter(), 0, filter);
         this.getEditor().setTextFormatter(textFormatter);
+
+        textFormatter.valueProperty().addListener((obs, oldValue, newValue) -> {
+            SpinnerValueFactory.IntegerSpinnerValueFactory valueFactory = (SpinnerValueFactory.IntegerSpinnerValueFactory) this.getValueFactory();
+            if (newValue != null && (newValue < valueFactory.getMin() || newValue > valueFactory.getMax())) {
+                Utils.displayError("La valeur doit être comprise entre " + valueFactory.getMin() + " et " + valueFactory.getMax() + "!");
+                textFormatter.setValue(oldValue);
+            }
+        });
     }
 
     public int getIntValue() {

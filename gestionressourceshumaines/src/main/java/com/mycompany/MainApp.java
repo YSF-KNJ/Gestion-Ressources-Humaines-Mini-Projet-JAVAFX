@@ -22,8 +22,8 @@ public class MainApp extends Application {
             } else {
                 //new SigninController().openSignInWindow();
                 //new HomeController().openHomeWindow();
-                //new EmployeeController().openEmployeeWindow();
-                new DepartmentController().openDepartmentWindow();
+                new EmployeeController().openEmployeeWindow();
+                //new DepartmentController().openDepartmentWindow();
             }
 
         } catch (Exception e) {

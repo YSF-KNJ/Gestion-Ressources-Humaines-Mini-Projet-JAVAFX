@@ -42,6 +42,9 @@ public class DepartmentController {
     private TableView<Departement> table;
 
     @FXML
+    private Departement selectedDepartement;
+
+    @FXML
     private TableColumn<Departement, Integer> coltid;
 
     @FXML
@@ -91,6 +94,32 @@ public class DepartmentController {
 
     @FXML
     public void handleUpdateButtonAction() {
+        if (selectedDepartement == null) {
+            selectedDepartement = table.getSelectionModel().getSelectedItem();
+            if (selectedDepartement != null) {
+                titrededepartement.setText(selectedDepartement.getNom_Departement());
+                depidlocalisation.setRange(1, Localisation.countLocalisation(), selectedDepartement.getId_localisation());
+            } else {
+                Utils.displayError("Veuillez sélectionner un département à modifier");
+            }
+        } else {
+            if (titrededepartement.getText().isEmpty() || depidlocalisation.getValue() == null) {
+                Utils.displayError("Veuillez remplir tous les champs");
+            } else {
+                try {
+                    if (Localisation.checkID(depidlocalisation.getIntValue())) {
+                        Departement.updateDepartement(selectedDepartement.getId(), titrededepartement.getText(), depidlocalisation.getIntValue());
+                        Utils.displayInfo("Département modifié avec succès");
+                        updateFields();
+                        selectedDepartement = null;
+                    } else {
+                        Utils.displayError("vérifier l'ID de la localisation");
+                    }
+                } catch (SQLException e) {
+                    Utils.displayErrorAndExit("Une erreur s'est produite lors de la modification de département");
+                }
+            }
+        }
     }
 
     @FXML
@@ -118,7 +147,7 @@ public class DepartmentController {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Department Window");
+            stage.setTitle("Gestion des départements");
             Image hrImage = new Image(getClass().getResourceAsStream("/icons/management.png"));
             stage.getIcons().add(hrImage);
             stage.setResizable(false);
