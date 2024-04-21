@@ -1,45 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.net.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.*?>
 
-<?import java.net.URL?>
-<AnchorPane xmlns="http://javafx.com/javafx/22"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.mycompany.controller.HomeController"
-            prefHeight="600.0"
-            prefWidth="800.0"
-            fx:id="AnchorPane">
+<AnchorPane fx:id="AnchorPane" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.mycompany.controller.HomeController">
 
     <stylesheets>
-        <URL value="@../styles/home.css"/>
+        <URL value="@../styles/home.css" />
     </stylesheets>
     <children>
-        <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="800.0" spacing="20.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" AnchorPane.bottomAnchor="0.0">
+        <VBox alignment="CENTER" layoutX="0.0" layoutY="0.0" prefHeight="600.0" prefWidth="800.0" spacing="20.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label text="RESSOURCES HUMAINES!" textAlignment="CENTER" alignment="CENTER">
+                <Label alignment="CENTER" text="RESSOURCES HUMAINES!" textAlignment="CENTER">
                     <font>
-                        <Font name="System Bold" size="25.0"/>
+                        <Font name="System Bold" size="25.0" />
                     </font>
                 </Label>
                 <HBox alignment="CENTER" spacing="20.0">
                     <children>
-                        <Button fx:id="buttonEmployees" text="Employees" minWidth="250.0" minHeight="100.0" maxWidth="250.0" maxHeight="100.0">
+                        <Button fx:id="buttonEmployees" maxHeight="100.0" maxWidth="250.0" minHeight="100.0" minWidth="250.0" text="Employees">
                             <graphic>
-                                <ImageView fitWidth="50.0" fitHeight="50.0" smooth="true" preserveRatio="true">
+                                <ImageView fitHeight="50.0" fitWidth="50.0" preserveRatio="true" smooth="true">
                                     <image>
-                                        <Image url="@../icons/Employees.png" preserveRatio="true" requestedWidth="140" requestedHeight="140" smooth="true"/>
+                                        <Image preserveRatio="true" requestedHeight="140" requestedWidth="140" smooth="true" url="@../icons/Employees.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="buttonDepartments" text="Departments" minWidth="250.0" minHeight="100.0" maxWidth="250.0" maxHeight="100.0">
+                        <Button fx:id="buttonDepartments" maxHeight="100.0" maxWidth="250.0" minHeight="100.0" minWidth="250.0" text="Departments">
                             <graphic>
-                                <ImageView fitWidth="50.0" fitHeight="50.0" smooth="true" preserveRatio="true">
+                                <ImageView fitHeight="50.0" fitWidth="50.0" preserveRatio="true" smooth="true">
                                     <image>
-                                        <Image url="@../icons/Departments.png" preserveRatio="true" requestedWidth="140" requestedHeight="140" smooth="true"/>
+                                        <Image preserveRatio="true" requestedHeight="140" requestedWidth="140" smooth="true" url="@../icons/Departments.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
@@ -48,20 +43,20 @@
                 </HBox>
                 <HBox alignment="CENTER" spacing="20.0">
                     <children>
-                        <Button fx:id="buttonPosts" text="Posts" minWidth="250.0" minHeight="100.0" maxWidth="250.0" maxHeight="100.0">
+                        <Button fx:id="buttonPosts" maxHeight="100.0" maxWidth="250.0" minHeight="100.0" minWidth="250.0" text="Posts">
                             <graphic>
-                                <ImageView fitWidth="50.0" fitHeight="50.0" smooth="true" preserveRatio="true">
+                                <ImageView fitHeight="50.0" fitWidth="50.0" preserveRatio="true" smooth="true">
                                     <image>
-                                        <Image url="@../icons/Posts.png" preserveRatio="true" requestedWidth="140" requestedHeight="140" smooth="true"/>
+                                        <Image preserveRatio="true" requestedHeight="140" requestedWidth="140" smooth="true" url="@../icons/Posts.png" />
                                     </image>
                                 </ImageView>
                             </graphic>
                         </Button>
-                        <Button fx:id="buttonLocalisations" text="Localisations" minWidth="250.0" minHeight="100.0" maxWidth="250.0" maxHeight="100.0">
+                        <Button fx:id="buttonLocalisations" maxHeight="100.0" maxWidth="250.0" minHeight="100.0" minWidth="250.0" text="Localisations">
                             <graphic>
-                                <ImageView fitWidth="50.0" fitHeight="50.0" smooth="true" preserveRatio="true">
+                                <ImageView fitHeight="50.0" fitWidth="50.0" preserveRatio="true" smooth="true">
                                     <image>
-                                        <Image url="@../icons/Localisation.png" preserveRatio="true" requestedWidth="140" requestedHeight="140" smooth="true"/>
+                                        <Image preserveRatio="true" requestedHeight="140" requestedWidth="140" smooth="true" url="@../icons/Localisation.png" />
                                     </image>
                                 </ImageView>
                             </graphic>

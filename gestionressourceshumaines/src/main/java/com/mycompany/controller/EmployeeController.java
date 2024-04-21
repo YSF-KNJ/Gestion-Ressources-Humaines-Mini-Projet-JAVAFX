@@ -346,8 +346,15 @@ public class EmployeeController {
         this.emptelephone.clear();
         this.empidposte.setRange(1, Poste.countPost(), 1);
         this.empiddepartement.setRange(1, Departement.countDepartement(), 1);
-        this.empidmanager.setRange(1, Employe.countEmployes(), 1);
         this.empsalaire.setRange(0, Integer.MAX_VALUE, Employe.getSalaryAvg());
+        managercheckbox.setSelected(false);
+        empidmanager.setVisible(true);
+        empidmanager.setDisable(false);
+        this.empidmanager.setRange(1, Employe.countEmployes(), 1);
+        this.empidmanager.getEditor().setText("1");
+
+
+
 
         try {
             ObservableList<Employe> data = Employe.getAllEmployes();
