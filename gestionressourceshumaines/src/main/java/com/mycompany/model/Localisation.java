@@ -1,5 +1,6 @@
 package com.mycompany.model;
 
+import com.mycompany.util.Utils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -48,16 +49,21 @@ public class Localisation {
     }
 
 
-    public static int countLocalisation() throws SQLException {
-        int count = 0;
-        Connection conct = MySQLConnector.getConnection();
-        String query = "SELECT COUNT(*) AS total FROM localisation";
-        PreparedStatement stmt = conct.prepareStatement(query);
-        ResultSet rs = stmt.executeQuery();
-        if (rs.next()) {
-            count = rs.getInt("total");
+    public static int countLocalisation() {
+        try {
+            int count = 0;
+            Connection conct = MySQLConnector.getConnection();
+            String query = "SELECT COUNT(*) AS total FROM localisation";
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                count = rs.getInt("total");
+            }
+            return count;
+        } catch (SQLException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite");
+            return 0;
         }
-        return count;
     }
 
 

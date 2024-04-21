@@ -17,44 +17,49 @@ public class Departement {
     private String nom_Departement;
     private int id_localisation;
 
-    public Departement(int id, String nom_Departement, int id_localisation) {
-        this.id = id;
-        this.nom_Departement = nom_Departement;
-        this.id_localisation = id_localisation;
-    }
 
     public int getId() {
         return id;
+    }
+
+    public int getId_localisation() {
+        return id_localisation;
     }
 
     public String getNom_Departement() {
         return nom_Departement;
     }
 
-    public static ObservableList<Departement> getAllDepartements() throws SQLException {
-        ObservableList<Departement> departements = FXCollections.observableArrayList();
+    public Departement(int id_departement, String nom_Departement, int id_localisation) {
+        this.id = id_departement;
+        this.nom_Departement = nom_Departement;
+        this.id_localisation = id_localisation;
+    }
 
-        String query = "SELECT * FROM departements";
-        try (Connection conct = MySQLConnector.getConnection();
-             PreparedStatement stmt = conct.prepareStatement(query)) {
 
+    public static ObservableList<Departement> getAllDepartements() {
+        ObservableList<Departement> data;
+        try {
+            String query = "SELECT * FROM departement";
+            Connection conct = MySQLConnector.getConnection();
+            PreparedStatement stmt = conct.prepareStatement(query);
             ResultSet resultSet = stmt.executeQuery();
-
+            data = FXCollections.observableArrayList();
             while (resultSet.next()) {
                 int id = resultSet.getInt("id_departement");
                 String nom_Departement = resultSet.getString("nom_departement");
                 int id_localisation = resultSet.getInt("id_localisation");
-                Departement departement = new Departement(id, nom_Departement, id_localisation);
-                departements.add(departement);
+                data.add(new Departement(id, nom_Departement, id_localisation));
             }
+            conct.close();
+            return data;
+
+        } catch (SQLException e) {
+            Utils.displayError("Une erreur s'est produite here");
+            return null;
         }
-
-        return departements;
     }
 
-    public int getId_localisation() {
-        return id_localisation;
-    }
 
     public static boolean checkID(int id) throws SQLException {
         boolean bool = false;
