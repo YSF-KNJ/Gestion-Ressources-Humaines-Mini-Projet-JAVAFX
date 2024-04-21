@@ -3,7 +3,6 @@ package com.mycompany.model;
 import com.mycompany.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -13,7 +12,7 @@ import java.io.*;
 import java.sql.*;
 import java.util.Scanner;
 
-public class Poste{
+public class Poste {
     private int id;
     private String titre_poste;
 
@@ -53,6 +52,7 @@ public class Poste{
             return null;
         }
     }
+
     public static boolean checkID(int id) throws SQLException {
         boolean bool = false;
         String Query = "SELECT COUNT(*) AS count FROM poste WHERE id_poste = ?";
@@ -89,25 +89,17 @@ public class Poste{
 
     }
 
-    public static void updatePost(int id, String title) throws ClassNotFoundException, SQLException {
+    public static void updatePost(int id, String title) throws SQLException {
         Connection conct = null;
-        try {
-            String Query = "UPDATE poste SET titre_poste = ? WHERE id_poste = ?";
-            conct = MySQLConnector.getConnection();
-            conct.setAutoCommit(false);
-            PreparedStatement stmt = conct.prepareStatement(Query);
-            stmt.setString(1, title.trim().toUpperCase());
-            stmt.setInt(2, id);
-            stmt.executeUpdate();
-            conct.commit();
-            conct.close();
-            //
-        } catch (SQLException e) {
-            if (conct != null) {
-                conct.rollback();
-                throw e;
-            }
-        }
+        String Query = "UPDATE poste SET titre_poste = ? WHERE id_poste = ?";
+        conct = MySQLConnector.getConnection();
+        conct.setAutoCommit(false);
+        PreparedStatement stmt = conct.prepareStatement(Query);
+        stmt.setString(1, title.trim().toUpperCase());
+        stmt.setInt(2, id);
+        stmt.executeUpdate();
+        conct.commit();
+        conct.close();
     }
 
     public static void addPost(String title) throws SQLException {

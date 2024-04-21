@@ -46,6 +46,9 @@ public class PosteController {
     private TableColumn<Poste, String> coltitredeposte;
 
     @FXML
+    private Poste selectedPoste;
+
+    @FXML
     public void initialize() {
 
         colpid.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -84,7 +87,30 @@ public class PosteController {
 
     @FXML
     public void handleUpdateButtonAction() {
+        if (selectedPoste == null) {
+            selectedPoste = table.getSelectionModel().getSelectedItem();
+            if (selectedPoste != null) {
+                titredeposte.setText(selectedPoste.getTitre_poste());
+            } else {
+                Utils.displayError("Veuillez sélectionner un poste à modifier");
+            }
+        } else {
+            if (titredeposte.getText().isEmpty()) {
+                Utils.displayError("Veuillez remplir tous les champs");
+            } else {
+                try {
+                    Poste.updatePost(selectedPoste.getId(), titredeposte.getText());
+                    Utils.displayInfo("Poste modifié avec succès");
+                    updateFields();
+                    selectedPoste = null;
+                } catch (SQLException e) {
+                    Utils.displayErrorAndExit("Une erreur s'est produite lors de la modification de poste");
+                }
+            }
+        }
     }
+
+
 
     @FXML
     public void handleDeleteButtonAction() {
