@@ -163,6 +163,9 @@ public class Employe {
         }
     }
 
+
+
+
     public static void updateEmploye(int id, String prenom, String nom, String email, String telephone, double salaire, int id_poste, int id_departement, int id_manager) throws SQLException {
         Connection conct = null;
         if (checkID(id)) {
@@ -288,6 +291,23 @@ public class Employe {
                 count = rs.getInt("total");
             }
             return count;
+        } catch (SQLException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite");
+            return 0;
+        }
+    }
+
+    public static int getLastRowId() {
+        try {
+            Connection conct = MySQLConnector.getConnection();
+            String query = "SELECT MAX(id_employe) AS max_id FROM employes";
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("max_id");
+            } else {
+                throw new SQLException("Unable to retrieve the last row id from the employes table");
+            }
         } catch (SQLException e) {
             Utils.displayErrorAndExit("Une erreur s'est produite");
             return 0;

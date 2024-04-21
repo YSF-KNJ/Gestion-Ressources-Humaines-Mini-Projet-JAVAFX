@@ -36,6 +36,24 @@ public class Departement {
         this.id_localisation = id_localisation;
     }
 
+    public static int getLastRowId() {
+        try {
+            Connection conct = MySQLConnector.getConnection();
+            String query = "SELECT MAX(id_departement) AS max_id FROM departement";
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("max_id");
+            } else {
+                Utils.displayErrorAndExit("Unable to retrieve the last row id from the departement table");
+                return 0;
+            }
+        } catch (SQLException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite");
+            return 0;
+        }
+    }
+
 
     public static ObservableList<Departement> getAllDepartements() {
         ObservableList<Departement> data;

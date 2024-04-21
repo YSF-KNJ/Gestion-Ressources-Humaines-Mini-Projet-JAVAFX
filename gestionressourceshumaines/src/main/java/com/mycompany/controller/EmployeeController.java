@@ -121,14 +121,14 @@ public class EmployeeController {
             empidposte.setDisable(true);
             empidposte.setNull();
         } else {
-            empidposte.setRange(1, Poste.countPost(), 1);
+            empidposte.setRange(1, Poste.getLastRowId(), 1);
         }
 
         if (Departement.countDepartement() == 0) {
             empiddepartement.setDisable(true);
             empiddepartement.setNull();
         } else {
-            empiddepartement.setRange(1, Departement.countDepartement(), 1);
+            empiddepartement.setRange(1, Departement.getLastRowId(), 1);
         }
 
         if (Employe.countEmployes() == 0) {
@@ -137,7 +137,7 @@ public class EmployeeController {
             empidmanager.setDisable(true);
             empidmanager.setNull();
         } else {
-            empidmanager.setRange(1, Employe.countEmployes(), 1);
+            empidmanager.setRange(1, Employe.getLastRowId(), 1);
         }
 
         managercheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
@@ -223,9 +223,9 @@ public class EmployeeController {
                 emprenom.setText(selectedEmploye.getPrenom());
                 empemail.setText(selectedEmploye.getEmail());
                 emptelephone.setText(selectedEmploye.getTelephone());
-                empidposte.setRange(1, Poste.countPost(), selectedEmploye.getIdPoste());
-                empiddepartement.setRange(1, Departement.countDepartement(), selectedEmploye.getIdDepartement());
-                empidmanager.setRange(1, Employe.countEmployes(), selectedEmploye.getIdManager());
+                empidposte.setRange(1, Poste.getLastRowId(), selectedEmploye.getIdPoste());
+                empiddepartement.setRange(1, Departement.getLastRowId(), selectedEmploye.getIdDepartement());
+                empidmanager.setRange(1, Employe.getLastRowId(), selectedEmploye.getIdManager());
                 empsalaire.setRange(0, Integer.MAX_VALUE, selectedEmploye.getSalaire());
             } else {
                 Utils.displayError("Veuillez sélectionner un employé à modifier");
@@ -344,13 +344,13 @@ public class EmployeeController {
         this.emprenom.clear();
         this.empemail.clear();
         this.emptelephone.clear();
-        this.empidposte.setRange(1, Poste.countPost(), 1);
-        this.empiddepartement.setRange(1, Departement.countDepartement(), 1);
+        this.empidposte.setRange(1, Poste.getLastRowId(), 1);
+        this.empiddepartement.setRange(1, Departement.getLastRowId(), 1);
         this.empsalaire.setRange(0, Integer.MAX_VALUE, Employe.getSalaryAvg());
         managercheckbox.setSelected(false);
         empidmanager.setVisible(true);
         empidmanager.setDisable(false);
-        this.empidmanager.setRange(1, Employe.countEmployes(), 1);
+        this.empidmanager.setRange(1, Employe.getLastRowId(), 1);
         this.empidmanager.getEditor().setText("1");
 
 

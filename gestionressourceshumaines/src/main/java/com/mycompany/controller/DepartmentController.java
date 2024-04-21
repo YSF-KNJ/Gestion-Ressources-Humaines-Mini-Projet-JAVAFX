@@ -77,7 +77,7 @@ public class DepartmentController {
             depidlocalisation.setNull();
             messagelabel.setText("Veuillez ajouter une localisation avant d'ajouter un département");
         } else {
-            this.depidlocalisation.setRange(1, Localisation.countLocalisation(), 1);
+            this.depidlocalisation.setRange(1, Localisation.getLastRowId(), 1);
         }
     }
 
@@ -168,7 +168,7 @@ public class DepartmentController {
 
     public void updateFields() {
         this.titrededepartement.clear();
-        this.depidlocalisation.setRange(1, Localisation.countLocalisation(), 1);
+        this.depidlocalisation.setRange(1, Localisation.getLastRowId(), 1);
 
         try {
             ObservableList<Departement> data = Departement.getAllDepartements();

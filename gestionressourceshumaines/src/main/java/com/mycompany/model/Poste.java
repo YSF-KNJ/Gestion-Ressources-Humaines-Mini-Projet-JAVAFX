@@ -89,6 +89,24 @@ public class Poste {
 
     }
 
+    public static int getLastRowId() {
+        try {
+            Connection conct = MySQLConnector.getConnection();
+            String query = "SELECT MAX(id_poste) AS max_id FROM poste";
+            PreparedStatement stmt = conct.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("max_id");
+            } else {
+                Utils.displayErrorAndExit("Unable to retrieve the last row id from the poste table");
+                return 0;
+            }
+        } catch (SQLException e) {
+            Utils.displayErrorAndExit("Une erreur s'est produite");
+            return 0;
+        }
+    }
+
     public static void updatePost(int id, String title) throws SQLException {
         Connection conct = null;
         if (checkID(id)) {
