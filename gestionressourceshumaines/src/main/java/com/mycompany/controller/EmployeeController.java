@@ -2,12 +2,10 @@ package com.mycompany.controller;
 
 import com.mycompany.model.Departement;
 import com.mycompany.model.Employe;
-import com.mycompany.model.MySQLConnector;
 import com.mycompany.model.Poste;
 import com.mycompany.util.CustomSpinner;
 import com.mycompany.util.EmailValidator;
 import com.mycompany.util.Utils;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,9 +20,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class EmployeeController {
@@ -66,6 +61,9 @@ public class EmployeeController {
     private TableView<Employe> table;
 
     @FXML
+    private TableColumn<Employe, Integer> colid;
+
+    @FXML
     private TableColumn<Employe, String> colnom;
 
     @FXML
@@ -91,6 +89,7 @@ public class EmployeeController {
 
     @FXML
     public void initialize() {
+        colid.setCellValueFactory(new PropertyValueFactory<>("id"));
         colnom.setCellValueFactory(new PropertyValueFactory<>("nom"));
         colprenom.setCellValueFactory(new PropertyValueFactory<>("prenom"));
         colemail.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -107,16 +106,13 @@ public class EmployeeController {
             Utils.displayErrorAndExit("Une erreur s'est produite lors de la récupération des données");
         }
 
-
         empadd.setOnAction(event -> handleAddButtonAction());
         empupdate.setOnAction(event -> handleUpdateButtonAction());
         empdelete.setOnAction(event -> handleDeleteButtonAction());
-
         empidposte.setRange(1, Poste.countPost(), 1);
         empiddepartement.setRange(1, Departement.countDepartement(), 1);
         empidmanager.setRange(1, Employe.countEmployes(), 1);
         empsalaire.setRange(0, Integer.MAX_VALUE, Employe.getSalaryAvg());
-
     }
 
     @FXML
@@ -139,8 +135,7 @@ public class EmployeeController {
                                 empiddepartement.getIntValue(),
                                 empidmanager.getIntValue());
                         Utils.displayInfo("Employé ajouté avec succès");
-                        clearFields();
-
+                        updateFields();
                     } else {
                         Utils.displayError("vérifier les identifiants de poste, de manager et de département");
                     }
@@ -160,7 +155,21 @@ public class EmployeeController {
 
     @FXML
     private void handleDeleteButtonAction() {
-        System.out.println("Delete button clicked");
+        Employe selectedEmploye = table.getSelectionModel().getSelectedItem();
+
+        if (selectedEmploye != null) {
+            try {
+                Employe.deleteEmploye(selectedEmploye.getId());
+                table.getItems().remove(selectedEmploye);
+                Utils.displayInfo("Employé supprimé avec succès");
+                updateFields();
+
+            } catch (SQLException e) {
+                Utils.displayError("Une erreur s'est produite lors de la suppression de l'employé");
+            }
+        } else {
+            Utils.displayError("Veuillez sélectionner un employé à supprimer");
+        }
     }
 
     @FXML
@@ -180,7 +189,7 @@ public class EmployeeController {
         }
     }
 
-    public void clearFields() {
+    public void updateFields() {
         this.empnom.clear();
         this.emprenom.clear();
         this.empemail.clear();

@@ -93,6 +93,7 @@
             </Pane>
             <TableView fx:id="table" layoutX="25.0" layoutY="378.0" prefHeight="200.0" prefWidth="750.0" style="-fx-background-color: #b3e0f3;">
                <columns>
+                  <TableColumn fx:id="colid" prefWidth="99.0" style="-fx-background-color: #87CEEB;" text="Id" />
                   <TableColumn fx:id="colnom" prefWidth="99.0" style="-fx-background-color: #87CEEB;" text="Nom" />
                   <TableColumn fx:id="colprenom" style="-fx-background-color: #87CEEB;" text="Prénom " />
                   <TableColumn fx:id="colemail" prefWidth="143.0" style="-fx-background-color: #87CEEB;" text="Email" />

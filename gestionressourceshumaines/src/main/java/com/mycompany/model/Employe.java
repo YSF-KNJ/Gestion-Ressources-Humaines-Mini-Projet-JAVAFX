@@ -14,7 +14,7 @@ import java.sql.*;
 import java.util.Scanner;
 
 public class Employe {
-
+    private int id;
     private String prenom;
     private String nom;
     private String email;
@@ -24,7 +24,8 @@ public class Employe {
     private int id_departement;
     private Integer id_manager;
 
-    public Employe(String prenom, String nom, String email, String telephone, double salaire, int id_poste, int id_departement, Integer id_manager) {
+    public Employe(int id, String prenom, String nom, String email, String telephone, double salaire, int id_poste, int id_departement, Integer id_manager) {
+        this.id = id;
         this.prenom = prenom;
         this.nom = nom;
         this.email = email;
@@ -59,6 +60,7 @@ public class Employe {
             data = FXCollections.observableArrayList();
 
             while (resultSet.next()) {
+                int id = resultSet.getInt("id_employe");
                 String nom = resultSet.getString("nom");
                 String prenom = resultSet.getString("prenom");
                 String email = resultSet.getString("email");
@@ -68,7 +70,7 @@ public class Employe {
                 int idDepartement = resultSet.getInt("id_departement");
                 int idManager = resultSet.getInt("id_manager");
 
-                data.add(new Employe(nom, prenom, email, telephone, salaire, idPoste, idDepartement, idManager));
+                data.add(new Employe(id,nom, prenom, email, telephone, salaire, idPoste, idDepartement, idManager));
             }
             conct.close();
             return data;
@@ -418,6 +420,10 @@ public class Employe {
 
     public int getSalaire() {
         return (int) this.salaire;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public int getIdPoste() {
