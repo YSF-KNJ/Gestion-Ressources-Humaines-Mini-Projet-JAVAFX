@@ -205,9 +205,69 @@ public class EmployeeController {
             }
         } else {
             try {
-                System.out.println("biba l ymak");
-                Utils.displayInfo("Employé mis à jour avec succès");
-                updateFields();
+                if (!managercheckbox.isSelected()) {
+                    if (empnom.getText().isEmpty() || empsalaire.getValue() == null || empidposte.getValue() == null || empiddepartement.getValue() == null || empidmanager.getValue() == null || empemail.getText().isEmpty() || emptelephone.getText().isEmpty()) {
+                        Utils.displayError("Veuillez remplir tous les champs");
+                    } else {
+                        if (!EmailValidator.validateEmail(empemail.getText())) {
+                            Utils.displayError("Veuillez entrer un email valide");
+                        } else {
+
+                            try {
+                                if (Poste.checkID(empidposte.getIntValue()) && Employe.checkID(empidmanager.getIntValue()) && Departement.checkID(empiddepartement.getIntValue())) {
+                                    Employe.updateEmploye(selectedEmploye.getId(),
+                                            emprenom.getText(),
+                                            empnom.getText(),
+                                            empemail.getText(),
+                                            emptelephone.getText(),
+                                            empsalaire.getIntValue(),
+                                            empidposte.getIntValue(),
+                                            empiddepartement.getIntValue(),
+                                            empidmanager.getIntValue());
+
+                                    Utils.displayInfo("Employé mis à jour");
+                                    updateFields();
+                                } else {
+                                    Utils.displayError("vérifier les identifiants de poste, de manager et de département");
+                                }
+                            } catch (SQLException e) {
+                                Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ajout de l'employé");
+                            }
+
+                        }
+
+                    }
+                } else {
+                    if (empnom.getText().isEmpty() || empsalaire.getValue() == null || empidposte.getValue() == null || empiddepartement.getValue() == null || empemail.getText().isEmpty() || emptelephone.getText().isEmpty()) {
+                        Utils.displayError("Veuillez remplir tous les champs");
+                    } else {
+                        if (!EmailValidator.validateEmail(empemail.getText())) {
+                            Utils.displayError("Veuillez entrer un email valide");
+                        } else {
+
+                            try {
+                                if (Poste.checkID(empidposte.getIntValue()) && Departement.checkID(empiddepartement.getIntValue())) {
+                                    Employe.updateManager(selectedEmploye.getId(),
+                                            emprenom.getText(),
+                                            empnom.getText(),
+                                            empemail.getText(),
+                                            emptelephone.getText(),
+                                            empsalaire.getIntValue(),
+                                            empidposte.getIntValue(),
+                                            empiddepartement.getIntValue());
+                                    Utils.displayInfo("manager mis à jour avec succès");
+                                    updateFields();
+                                } else {
+                                    Utils.displayError("vérifier les identifiants de poste et de département");
+                                }
+                            } catch (SQLException e) {
+                                Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ajout de manager");
+                            }
+
+                        }
+
+                    }
+                }
                 selectedEmploye = null;
             } catch (Exception e) {
                 Utils.displayError("Une erreur s'est produite lors de la mise à jour de l'employé");
