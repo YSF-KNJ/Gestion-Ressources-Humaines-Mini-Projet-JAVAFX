@@ -11,10 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -47,6 +44,9 @@ public class EmployeeController {
 
     @FXML
     private CustomSpinner empidmanager;
+
+    @FXML
+    private CheckBox managercheckbox;
 
     @FXML
     private Button empadd;
@@ -113,38 +113,74 @@ public class EmployeeController {
         empiddepartement.setRange(1, Departement.countDepartement(), 1);
         empidmanager.setRange(1, Employe.countEmployes(), 1);
         empsalaire.setRange(0, Integer.MAX_VALUE, Employe.getSalaryAvg());
+
+        managercheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            empidmanager.setVisible(!newValue);
+        });
+
     }
 
     @FXML
     private void handleAddButtonAction() {
-        if (empnom.getText().isEmpty() || empsalaire.getValue() == null || empidposte.getValue() == null || empiddepartement.getValue() == null || empidmanager.getValue() == null || empemail.getText().isEmpty() || emptelephone.getText().isEmpty()) {
-            Utils.displayError("Veuillez remplir tous les champs");
-        } else {
-            if (!EmailValidator.validateEmail(empemail.getText())) {
-                Utils.displayError("Veuillez entrer un email valide");
+        if (!managercheckbox.isSelected()) {
+            if (empnom.getText().isEmpty() || empsalaire.getValue() == null || empidposte.getValue() == null || empiddepartement.getValue() == null || empidmanager.getValue() == null || empemail.getText().isEmpty() || emptelephone.getText().isEmpty()) {
+                Utils.displayError("Veuillez remplir tous les champs");
             } else {
+                if (!EmailValidator.validateEmail(empemail.getText())) {
+                    Utils.displayError("Veuillez entrer un email valide");
+                } else {
 
-                try {
-                    if (Poste.checkID(empidposte.getIntValue()) && Employe.checkID(empidmanager.getIntValue()) && Departement.checkID(empiddepartement.getIntValue())) {
-                        Employe.addEmploye(emprenom.getText(),
-                                empnom.getText(),
-                                empemail.getText(),
-                                emptelephone.getText(),
-                                empsalaire.getIntValue(),
-                                empidposte.getIntValue(),
-                                empiddepartement.getIntValue(),
-                                empidmanager.getIntValue());
-                        Utils.displayInfo("Employé ajouté avec succès");
-                        updateFields();
-                    } else {
-                        Utils.displayError("vérifier les identifiants de poste, de manager et de département");
+                    try {
+                        if (Poste.checkID(empidposte.getIntValue()) && Employe.checkID(empidmanager.getIntValue()) && Departement.checkID(empiddepartement.getIntValue())) {
+                            Employe.addEmploye(emprenom.getText(),
+                                    empnom.getText(),
+                                    empemail.getText(),
+                                    emptelephone.getText(),
+                                    empsalaire.getIntValue(),
+                                    empidposte.getIntValue(),
+                                    empiddepartement.getIntValue(),
+                                    empidmanager.getIntValue());
+                            Utils.displayInfo("Employé ajouté avec succès");
+                            updateFields();
+                        } else {
+                            Utils.displayError("vérifier les identifiants de poste, de manager et de département");
+                        }
+                    } catch (SQLException e) {
+                        Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ajout de l'employé");
                     }
-                } catch (SQLException e) {
-                    Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ajout de l'employé");
+
                 }
 
             }
+        } else {
+            if (empnom.getText().isEmpty() || empsalaire.getValue() == null || empidposte.getValue() == null || empiddepartement.getValue() == null || empemail.getText().isEmpty() || emptelephone.getText().isEmpty()) {
+                Utils.displayError("Veuillez remplir tous les champs");
+            } else {
+                if (!EmailValidator.validateEmail(empemail.getText())) {
+                    Utils.displayError("Veuillez entrer un email valide");
+                } else {
 
+                    try {
+                        if (Poste.checkID(empidposte.getIntValue()) && Departement.checkID(empiddepartement.getIntValue())) {
+                            Employe.addManger(emprenom.getText(),
+                                    empnom.getText(),
+                                    empemail.getText(),
+                                    emptelephone.getText(),
+                                    empsalaire.getIntValue(),
+                                    empidposte.getIntValue(),
+                                    empiddepartement.getIntValue());
+                            Utils.displayInfo("Manager ajouté avec succès");
+                            updateFields();
+                        } else {
+                            Utils.displayError("vérifier les identifiants de poste et de département");
+                        }
+                    } catch (SQLException e) {
+                        Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ajout de manager");
+                    }
+
+                }
+
+            }
         }
     }
 
@@ -179,13 +215,14 @@ public class EmployeeController {
             Parent root = loader.load();
             Stage stage = new Stage();
             stage.setScene(new Scene(root));
-            stage.setTitle("Gestion des employés");
+            stage.setTitle("Inscription Fenêtre");
             Image hrImage = new Image(getClass().getResourceAsStream("/icons/management.png"));
             stage.getIcons().add(hrImage);
             stage.setResizable(false);
             stage.show();
         } catch (IOException e) {
-            Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ouverture de la page d'inscription");
+            e.printStackTrace();
+            Utils.displayErrorAndExit("Une erreur s'est produite lors de l'ouverture de la page");
         }
     }
 
