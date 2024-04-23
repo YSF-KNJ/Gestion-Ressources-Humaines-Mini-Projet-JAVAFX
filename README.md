@@ -2,6 +2,9 @@
 
 Ce projet est réalisé dans le cadre du mini-projet 4 pour le cours de Architecture Distribuée, sous la supervision du professeur Otman ABDOUN. Il vise à concevoir une application de gestion des ressources humaines en utilisant JAVAFX avec XML et une base de données relationnelle MYSQL .
 
+[![YouTube Video](https://i.ibb.co/w7yfR8H/hr.png)
+
+
 ## Membres du projet
 - Youssef Kanjaa
 - Ouassima Chairi Zrermi
