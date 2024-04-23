@@ -19,7 +19,7 @@ Ce projet est réalisé dans le cadre du mini-projet 4 pour le cours de Architec
 - Maven
 
 ## Project Structure
-![Image description](path/to/image)
+![Image description](https://i.ibb.co/QJMy8rn/arch.png)
 
 
 
