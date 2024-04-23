@@ -1,6 +1,14 @@
 # Gestion Ressources Humaines
 
-This is a JavaFX application for human resources management.
+Ce projet est réalisé dans le cadre du mini-projet 4 pour le cours de Architecture Distribuée, sous la supervision du professeur Otman ABDOUN. Il vise à concevoir une application de gestion des ressources humaines en utilisant JAVAFX avec XML et une base de données relationnelle MYSQL .
+
+## Membres du projet
+- Youssef Kanjaa
+- Ouassima Chairi Zrermi
+- Nada Bentaouyt
+
+[![YouTube Video](https://i3.ytimg.com/vi/Qh-z617fxnc/maxresdefault.jpg)](https://youtu.be/Qh-z617fxnc)
+
 
 ## Technologies Used
 
@@ -13,6 +21,11 @@ This is a JavaFX application for human resources management.
 ## Project Structure
 ![Image description](path/to/image)
 
-![Screenshot of the application](images/screenshot.png)
 
-[![IMAGE ALT TEXT HERE](http://img.youtube.com/vi/YOUTUBE_VIDEO_ID/0.jpg)](http://www.youtube.com/watch?v=YOUTUBE_VIDEO_ID)
+
+
+
+
+
+
+
