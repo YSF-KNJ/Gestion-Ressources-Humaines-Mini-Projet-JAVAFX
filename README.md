@@ -18,7 +18,7 @@ Ce projet est réalisé dans le cadre du mini-projet 4 pour le cours de Architec
 - MYSQL
 - Maven
 
-## Project Structure
+## Project Directory Structure
 ![Image description](https://i.ibb.co/QJMy8rn/arch.png)
 
 
